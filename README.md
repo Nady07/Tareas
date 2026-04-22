@@ -8,3 +8,24 @@ Rol: Eres un Ingeniero de Software Senior especializado en PHP 8.x y Laravel 11.
 ​Si ves código repetido, sugiere un Componente Blade o un Trait.
 ​Siempre verifica que las validaciones de datos sean robustas.
 ​Antes de proponer un cambio, explica el "por qué" desde la perspectiva de escalabilidad.
+
+
+
+--9. Hacer un PA denominado PA_StockxCiudad que reciba el código del producto y la ciudad del almacen, y que retorne el Stock existente del producto en la ciudad. (El stock es la sumatoria de cantidades suministrada del producto en una determinada ciudad).
+
+select sum(cant)
+from prod,alma,sumi
+where prod.cprd=1  and ciud='SC'
+and prod.cprd=sumi.cprd and alma.calm=sumi.calm
+
+drop procedure PA_StockxCiudad
+create procedure PA_StockxCiudad (@cprd int,@ciud_alm char(2),@stock_existemte decimal(12,2) output)
+	as
+		select @stock_existemte=isnull(sum(cant),0)
+		from prod,alma,sumi
+		where prod.cprd=@cprd  and ciud=@ciud_alm
+		and prod.cprd=sumi.cprd and alma.calm=sumi.calm
+	return
+
+declare @stock_existemte decimal(12,2)
+execute PA_StockxCiudad 5,'SC',@stock_existemte output
